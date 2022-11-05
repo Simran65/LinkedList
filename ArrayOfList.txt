@@ -1,0 +1,93 @@
+import org.w3c.dom.ls.LSOutput;
+import java.util.*;
+class Node{
+    int data;   Node next;
+    Node(int data){
+        next = null;
+        this.data = data;
+    }
+}
+
+class LinkedList{
+    public Node head;  int size;
+    LinkedList(){
+        head = null;
+        //head = new Node(null);
+        size = 1;
+    }
+    void add(int x){
+        Node nN= new Node(x);
+        if(head==null)
+            head = nN;
+        else{
+            nN.next=head;
+            head=nN;
+        }
+    }
+    void print(){
+        Node current = head;
+        while(current !=null){
+            System.out.print(current.data+" ");
+            current = current.next;
+        }
+    }
+}
+
+
+public class ArrayOfList {
+    public static int check(LinkedList[] list , int size, int listSize[], int value){
+
+        int count=0;
+        for(int i=0; i<size; i++){
+            Node cur = list[i].head;
+            for(int j=0; j<listSize[i]; j++){
+                while(cur!=null) {
+                    if (cur.data == value) {
+                        count++;
+                    }
+                    cur = cur.next;
+                }
+            }
+        }
+        return count;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter number of list:");
+        int no = sc.nextInt();
+
+        int[] number = new int[no];
+        //Take input about number of elements in each linkedlist
+        for(int i=0; i<no; i++){
+            System.out.print("Elements of "+ (i+1) + " Linkedlist: ");
+            number[i] = sc.nextInt();
+        }
+        //Particular number you want to check about its occuerence
+        System.out.print("Enter value you want to search for occurence: ");
+        int val = sc.nextInt();
+
+        LinkedList[] list = new LinkedList[no];
+        Random rand = new Random();
+
+        for(int i=0; i<no; i++){
+            list[i] = new LinkedList();
+            for(int j=0; j<number[i]; j++){
+                int x = 1+rand.nextInt(3);
+                list[i].add(x);
+            }
+        }
+
+        //print all list with its elements
+        for(int i=0; i<no; i++){
+            list[i].print();
+            System.out.println();
+        }
+
+        //CheckOccurence
+        int value = check(list,no,number,val);
+
+        System.out.println("\n"+val+" repeat " + value + " time in all lists.");
+    }
+}
+
